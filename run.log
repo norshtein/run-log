@@ -1,0 +1,846 @@
+
+##############################################################################
+# WARNING! This creates services in Azure and will cost you real MONEY!      #
+# If run to completion, these tests clean up after themselves, but if        #
+# interrupted, you may need to perform some manual cleanup on your           #
+# subscription!                                                              #
+##############################################################################
+
+docker run --rm -e CGO_ENABLED=0 -e AZURE_SUBSCRIPTION_ID=${AZURE_SUBSCRIPTION_ID} -e AZURE_TENANT_ID=${AZURE_TENANT_ID} -e AZURE_CLIENT_ID=${AZURE_CLIENT_ID} -e AZURE_CLIENT_SECRET=${AZURE_CLIENT_SECRET} -e TEST_MODULES=${TEST_MODULES} -v $(pwd):/go/src/github.com/Azure/open-service-broker-azure -w /go/src/github.com/Azure/open-service-broker-azure quay.io/deis/lightweight-docker-go:v0.2.0 go test -parallel 10 -timeout 60m github.com/Azure/open-service-broker-azure/tests/lifecycle -v
+2018/10/17 09:17:41 ----> creating resource group "test-a0e7238e-2adb-4d93-ba3b-36868807fb30"
+2018/10/17 09:17:45 ----> created resource group "test-a0e7238e-2adb-4d93-ba3b-36868807fb30"
+=== RUN   TestServices
+2018/10/17 09:17:45 ----> testing in resource group "test-a0e7238e-2adb-4d93-ba3b-36868807fb30"
+2018/10/17 09:17:45 Running tests for modules: [cosmosdb]
+=== RUN   TestServices/lifecycle
+=== RUN   TestServices/lifecycle/TestServices/lifecycle/cosmosdb/table-api-account-only
+=== PAUSE TestServices/lifecycle/TestServices/lifecycle/cosmosdb/table-api-account-only
+=== CONT  TestServices/lifecycle/TestServices/lifecycle/cosmosdb/table-api-account-only
+2018/10/17 09:17:45 ----> TestServices/lifecycle/cosmosdb/table-api-account-only: starting
+In table provisioning deployARMTemplate
+In func (c *cosmosAccountManager) deployARMTemplate
+In func (d *deployer) Deploy
+In func (d *deployer) doDeployment
+Entering d.deploymentsClient.CreateOrUpdate
+In function d.deploymentsClient.CreateOrUpdate, validate succeeded
+HTTP Request:
+PUT /subscriptions/c4528d9e-c99a-48bb-b12d-fde2176a43b8/resourcegroups/test-a0e7238e-2adb-4d93-ba3b-36868807fb30/providers/Microsoft.Resources/deployments/b581999f-a112-40aa-bd22-7be256e021cb?api-version=2017-05-10 HTTP/0.0
+Host: management.azure.com
+Content-Type: application/json
+
+{"properties":{"template":{"$schema":"http://schema.management.azure.com/schemas/2014-04-01-preview/deploymentTemplate.json#","contentVersion":"1.0.0.0","outputs":{"fullyQualifiedDomainName":{"type":"string","value":"[reference('xz96e9w9ihw6b7c9qvbed999z58ditz6afv').documentEndpoint]"},"primaryKey":{"type":"string","value":"[listKeys(resourceId('Microsoft.DocumentDb/databaseAccounts', 'xz96e9w9ihw6b7c9qvbed999z58ditz6afv'), '2015-04-08').primaryMasterKey]"}},"parameters":{"tags":{"type":"object"}},"resources":[{"apiVersion":"2015-04-08","kind":"GlobalDocumentDB","location":"southcentralus","name":"xz96e9w9ihw6b7c9qvbed999z58ditz6afv","properties":{"capabilities":[{"name":"EnableTable"}],"consistencyPolicy":{"defaultConsistencyLevel":"Session"},"databaseAccountOfferType":"Standard","enableAutomaticFailover":false,"ipRangeFilter":"0.0.0.0,0.0.0.0/0","locations":[{"failoverPriority":0,"id":"xz96e9w9ihw6b7c9qvbed999z58ditz6afv-southcentralus","locationName":"southcentralus"},{"failoverPriority":1,"id":"xz96e9w9ihw6b7c9qvbed999z58ditz6afv-eastus2","locationName":"eastus2"}]},"tags":"[parameters('tags')]","type":"Microsoft.DocumentDb/databaseAccounts"}]},"parameters":{"tags":{"value":{"defaultExperience":"Table","heritage":"open-service-broker-azure"}}},"mode":"Incremental"}}
+In function client.CreateOrUpdateSender(req)
+In future.Done
+In future.Done, sending request:
+PUT /subscriptions/c4528d9e-c99a-48bb-b12d-fde2176a43b8/resourcegroups/test-a0e7238e-2adb-4d93-ba3b-36868807fb30/providers/Microsoft.Resources/deployments/b581999f-a112-40aa-bd22-7be256e021cb?api-version=2017-05-10 HTTP/0.0
+Host: management.azure.com
+Authorization: <redacted>
+Content-Type: application/json
+User-Agent: Go/go1.10 (amd64-linux) go-autorest/9.8.1 Azure-SDK-For-Go/v14.0.0 resources/2017-05-10; open-service-broker/
+
+
+Response: 
+HTTP/1.1 201 Created
+Content-Length: 739
+Azure-Asyncoperation: https://management.azure.com/subscriptions/c4528d9e-c99a-48bb-b12d-fde2176a43b8/resourcegroups/test-a0e7238e-2adb-4d93-ba3b-36868807fb30/providers/Microsoft.Resources/deployments/b581999f-a112-40aa-bd22-7be256e021cb/operationStatuses/08586618390181950020?api-version=2017-05-10
+Cache-Control: no-cache
+Content-Type: application/json; charset=utf-8
+Date: Wed, 17 Oct 2018 09:17:50 GMT
+Expires: -1
+Pragma: no-cache
+Strict-Transport-Security: max-age=31536000; includeSubDomains
+X-Content-Type-Options: nosniff
+X-Ms-Correlation-Request-Id: 8c9153be-2dac-4614-a99e-1d83c8fe473c
+X-Ms-Ratelimit-Remaining-Subscription-Writes: 1198
+X-Ms-Request-Id: 8c9153be-2dac-4614-a99e-1d83c8fe473c
+X-Ms-Routing-Request-Id: EASTASIA:20181017T091751Z:8c9153be-2dac-4614-a99e-1d83c8fe473c
+
+{"id":"/subscriptions/c4528d9e-c99a-48bb-b12d-fde2176a43b8/resourceGroups/test-a0e7238e-2adb-4d93-ba3b-36868807fb30/providers/Microsoft.Resources/deployments/b581999f-a112-40aa-bd22-7be256e021cb","name":"b581999f-a112-40aa-bd22-7be256e021cb","properties":{"templateHash":"83245288991520435","parameters":{"tags":{"type":"Object","value":{"defaultExperience":"Table","heritage":"open-service-broker-azure"}}},"mode":"Incremental","provisioningState":"Accepted","timestamp":"2018-10-17T09:17:49.2895596Z","duration":"PT2.0069555S","correlationId":"8c9153be-2dac-4614-a99e-1d83c8fe473c","providers":[{"namespace":"Microsoft.DocumentDb","resourceTypes":[{"resourceType":"databaseAccounts","locations":["southcentralus"]}]}],"dependencies":[]}}
+Exit future.Done
+Entering WaitForCompletion
+In (f Future) WaitForCompletion
+In WaitForCompletion, invoke f.Done
+In future.Done
+In future.Done, sending request:
+GET /subscriptions/c4528d9e-c99a-48bb-b12d-fde2176a43b8/resourcegroups/test-a0e7238e-2adb-4d93-ba3b-36868807fb30/providers/Microsoft.Resources/deployments/b581999f-a112-40aa-bd22-7be256e021cb/operationStatuses/08586618390181950020?api-version=2017-05-10 HTTP/0.0
+Host: management.azure.com
+Authorization: <redacted>
+User-Agent: Go/go1.10 (amd64-linux) go-autorest/9.8.1 Azure-SDK-For-Go/v14.0.0 resources/2017-05-10; open-service-broker/
+
+
+Response: 
+HTTP/1.1 200 OK
+Cache-Control: no-cache
+Content-Type: application/json; charset=utf-8
+Date: Wed, 17 Oct 2018 09:17:51 GMT
+Expires: -1
+Pragma: no-cache
+Strict-Transport-Security: max-age=31536000; includeSubDomains
+Vary: Accept-Encoding
+X-Content-Type-Options: nosniff
+X-Ms-Correlation-Request-Id: e4ca4f63-529a-4eb1-a535-95f02f7096b5
+X-Ms-Ratelimit-Remaining-Subscription-Reads: 11997
+X-Ms-Request-Id: e4ca4f63-529a-4eb1-a535-95f02f7096b5
+X-Ms-Routing-Request-Id: EASTASIA:20181017T091751Z:e4ca4f63-529a-4eb1-a535-95f02f7096b5
+
+{"status":"Accepted"}
+2018/10/17 09:18:45 ----> TestServices/lifecycle/cosmosdb/table-api-account-only: in progress
+In loop, invoke f.Done
+In future.Done
+In future.Done, sending request:
+GET /subscriptions/c4528d9e-c99a-48bb-b12d-fde2176a43b8/resourcegroups/test-a0e7238e-2adb-4d93-ba3b-36868807fb30/providers/Microsoft.Resources/deployments/b581999f-a112-40aa-bd22-7be256e021cb/operationStatuses/08586618390181950020?api-version=2017-05-10 HTTP/0.0
+Host: management.azure.com
+Authorization: <redacted>
+User-Agent: Go/go1.10 (amd64-linux) go-autorest/9.8.1 Azure-SDK-For-Go/v14.0.0 resources/2017-05-10; open-service-broker/
+
+
+Response: 
+HTTP/1.1 200 OK
+Cache-Control: no-cache
+Content-Type: application/json; charset=utf-8
+Date: Wed, 17 Oct 2018 09:18:52 GMT
+Expires: -1
+Pragma: no-cache
+Strict-Transport-Security: max-age=31536000; includeSubDomains
+Vary: Accept-Encoding
+X-Content-Type-Options: nosniff
+X-Ms-Correlation-Request-Id: db49a2c4-9721-4810-a408-bfa2584870e0
+X-Ms-Ratelimit-Remaining-Subscription-Reads: 11996
+X-Ms-Request-Id: db49a2c4-9721-4810-a408-bfa2584870e0
+X-Ms-Routing-Request-Id: EASTASIA:20181017T091853Z:db49a2c4-9721-4810-a408-bfa2584870e0
+
+{"status":"Running"}
+2018/10/17 09:19:45 ----> TestServices/lifecycle/cosmosdb/table-api-account-only: in progress
+In loop, invoke f.Done
+In future.Done
+In future.Done, sending request:
+GET /subscriptions/c4528d9e-c99a-48bb-b12d-fde2176a43b8/resourcegroups/test-a0e7238e-2adb-4d93-ba3b-36868807fb30/providers/Microsoft.Resources/deployments/b581999f-a112-40aa-bd22-7be256e021cb/operationStatuses/08586618390181950020?api-version=2017-05-10 HTTP/0.0
+Host: management.azure.com
+Authorization: <redacted>
+User-Agent: Go/go1.10 (amd64-linux) go-autorest/9.8.1 Azure-SDK-For-Go/v14.0.0 resources/2017-05-10; open-service-broker/
+
+
+Response: 
+HTTP/1.1 200 OK
+Cache-Control: no-cache
+Content-Type: application/json; charset=utf-8
+Date: Wed, 17 Oct 2018 09:19:54 GMT
+Expires: -1
+Pragma: no-cache
+Strict-Transport-Security: max-age=31536000; includeSubDomains
+Vary: Accept-Encoding
+X-Content-Type-Options: nosniff
+X-Ms-Correlation-Request-Id: 10520745-5e3f-47de-94dd-393f51206adb
+X-Ms-Ratelimit-Remaining-Subscription-Reads: 11995
+X-Ms-Request-Id: 10520745-5e3f-47de-94dd-393f51206adb
+X-Ms-Routing-Request-Id: EASTASIA:20181017T091954Z:10520745-5e3f-47de-94dd-393f51206adb
+
+{"status":"Running"}
+2018/10/17 09:20:45 ----> TestServices/lifecycle/cosmosdb/table-api-account-only: in progress
+In loop, invoke f.Done
+In future.Done
+In future.Done, sending request:
+GET /subscriptions/c4528d9e-c99a-48bb-b12d-fde2176a43b8/resourcegroups/test-a0e7238e-2adb-4d93-ba3b-36868807fb30/providers/Microsoft.Resources/deployments/b581999f-a112-40aa-bd22-7be256e021cb/operationStatuses/08586618390181950020?api-version=2017-05-10 HTTP/0.0
+Host: management.azure.com
+Authorization: <redacted>
+User-Agent: Go/go1.10 (amd64-linux) go-autorest/9.8.1 Azure-SDK-For-Go/v14.0.0 resources/2017-05-10; open-service-broker/
+
+
+Response: 
+HTTP/1.1 200 OK
+Cache-Control: no-cache
+Content-Type: application/json; charset=utf-8
+Date: Wed, 17 Oct 2018 09:20:56 GMT
+Expires: -1
+Pragma: no-cache
+Strict-Transport-Security: max-age=31536000; includeSubDomains
+Vary: Accept-Encoding
+X-Content-Type-Options: nosniff
+X-Ms-Correlation-Request-Id: c292a1d9-041d-4a7e-bb79-526c34300b64
+X-Ms-Ratelimit-Remaining-Subscription-Reads: 11994
+X-Ms-Request-Id: c292a1d9-041d-4a7e-bb79-526c34300b64
+X-Ms-Routing-Request-Id: EASTASIA:20181017T092056Z:c292a1d9-041d-4a7e-bb79-526c34300b64
+
+{"status":"Succeeded"}
+The state of regions:
+Location: southcentralus, state: Succeeded
+Location: eastus2, state: Creating
+The state of regions:
+Location: southcentralus, state: Succeeded
+Location: eastus2, state: Creating
+The state of regions:
+Location: southcentralus, state: Succeeded
+Location: eastus2, state: Creating
+The state of regions:
+Location: southcentralus, state: Succeeded
+Location: eastus2, state: Creating
+2018/10/17 09:21:45 ----> TestServices/lifecycle/cosmosdb/table-api-account-only: in progress
+The state of regions:
+Location: southcentralus, state: Succeeded
+Location: eastus2, state: Creating
+The state of regions:
+Location: southcentralus, state: Succeeded
+Location: eastus2, state: Creating
+The state of regions:
+Location: southcentralus, state: Succeeded
+Location: eastus2, state: Creating
+The state of regions:
+Location: southcentralus, state: Succeeded
+Location: eastus2, state: Creating
+The state of regions:
+Location: southcentralus, state: Succeeded
+Location: eastus2, state: Creating
+The state of regions:
+Location: southcentralus, state: Succeeded
+Location: eastus2, state: Creating
+2018/10/17 09:22:45 ----> TestServices/lifecycle/cosmosdb/table-api-account-only: in progress
+The state of regions:
+Location: southcentralus, state: Succeeded
+Location: eastus2, state: Creating
+The state of regions:
+Location: southcentralus, state: Succeeded
+Location: eastus2, state: Creating
+The state of regions:
+Location: southcentralus, state: Succeeded
+Location: eastus2, state: Creating
+The state of regions:
+Location: southcentralus, state: Succeeded
+Location: eastus2, state: Creating
+The state of regions:
+Location: southcentralus, state: Succeeded
+Location: eastus2, state: Creating
+The state of regions:
+Location: southcentralus, state: Succeeded
+Location: eastus2, state: Creating
+2018/10/17 09:23:45 ----> TestServices/lifecycle/cosmosdb/table-api-account-only: in progress
+The state of regions:
+Location: southcentralus, state: Succeeded
+Location: eastus2, state: Creating
+The state of regions:
+Location: southcentralus, state: Succeeded
+Location: eastus2, state: Creating
+The state of regions:
+Location: southcentralus, state: Succeeded
+Location: eastus2, state: Creating
+The state of regions:
+Location: southcentralus, state: Succeeded
+Location: eastus2, state: Creating
+The state of regions:
+Location: southcentralus, state: Succeeded
+Location: eastus2, state: Creating
+The state of regions:
+Location: southcentralus, state: Succeeded
+Location: eastus2, state: Creating
+2018/10/17 09:24:45 ----> TestServices/lifecycle/cosmosdb/table-api-account-only: in progress
+The state of regions:
+Location: southcentralus, state: Succeeded
+Location: eastus2, state: Creating
+The state of regions:
+Location: southcentralus, state: Succeeded
+Location: eastus2, state: Creating
+The state of regions:
+Location: southcentralus, state: Succeeded
+Location: eastus2, state: Creating
+The state of regions:
+Location: southcentralus, state: Succeeded
+Location: eastus2, state: Succeeded
+Creating succeeded
+Location:  southcentralus  ,status:  Succeeded
+Location:  eastus2  ,status:  Succeeded
+Updating parameters is not zero length
+readRegions: [centralus]
+Merged updating parameters:
+location: southcentralus
+ipFilters: map[allowedIPRanges:[0.0.0.0/0]]
+consistencyPolicy: map[defaultConsistencyLevel:Session]
+readRegions: [centralus]
+resourceGroup: test-a0e7238e-2adb-4d93-ba3b-36868807fb30
+In table updateARMTemplate
+In func (c *cosmosAccountManager) updateDeployment
+In updating function
+Updating xz96e9w9ihw6b7c9qvbed999z58ditz6afv
+Updating tags is:  map[defaultExperience:Table]
+In func (d *deployer) doDeployment
+Entering d.deploymentsClient.CreateOrUpdate
+In function d.deploymentsClient.CreateOrUpdate, validate succeeded
+HTTP Request:
+PUT /subscriptions/c4528d9e-c99a-48bb-b12d-fde2176a43b8/resourcegroups/test-a0e7238e-2adb-4d93-ba3b-36868807fb30/providers/Microsoft.Resources/deployments/b581999f-a112-40aa-bd22-7be256e021cb?api-version=2017-05-10 HTTP/0.0
+Host: management.azure.com
+Content-Type: application/json
+
+{"properties":{"template":{"$schema":"http://schema.management.azure.com/schemas/2014-04-01-preview/deploymentTemplate.json#","contentVersion":"1.0.0.0","outputs":{"fullyQualifiedDomainName":{"type":"string","value":"[reference('xz96e9w9ihw6b7c9qvbed999z58ditz6afv').documentEndpoint]"},"primaryKey":{"type":"string","value":"[listKeys(resourceId('Microsoft.DocumentDb/databaseAccounts', 'xz96e9w9ihw6b7c9qvbed999z58ditz6afv'), '2015-04-08').primaryMasterKey]"}},"parameters":{"tags":{"type":"object"}},"resources":[{"apiVersion":"2015-04-08","kind":"GlobalDocumentDB","location":"southcentralus","name":"xz96e9w9ihw6b7c9qvbed999z58ditz6afv","properties":{"capabilities":[{"name":"EnableTable"}],"consistencyPolicy":{"defaultConsistencyLevel":"Session"},"databaseAccountOfferType":"Standard","enableAutomaticFailover":false,"ipRangeFilter":"0.0.0.0,0.0.0.0/0","locations":[{"failoverPriority":0,"id":"xz96e9w9ihw6b7c9qvbed999z58ditz6afv-southcentralus","locationName":"southcentralus"},{"failoverPriority":1,"id":"xz96e9w9ihw6b7c9qvbed999z58ditz6afv-centralus","locationName":"centralus"}]},"tags":"[parameters('tags')]","type":"Microsoft.DocumentDb/databaseAccounts"}]},"parameters":{"tags":{"value":{"defaultExperience":"Table","heritage":"open-service-broker-azure"}}},"mode":"Incremental"}}
+In function client.CreateOrUpdateSender(req)
+In future.Done
+In future.Done, sending request:
+PUT /subscriptions/c4528d9e-c99a-48bb-b12d-fde2176a43b8/resourcegroups/test-a0e7238e-2adb-4d93-ba3b-36868807fb30/providers/Microsoft.Resources/deployments/b581999f-a112-40aa-bd22-7be256e021cb?api-version=2017-05-10 HTTP/0.0
+Host: management.azure.com
+Authorization: <redacted>
+Content-Type: application/json
+User-Agent: Go/go1.10 (amd64-linux) go-autorest/9.8.1 Azure-SDK-For-Go/v14.0.0 resources/2017-05-10; open-service-broker/
+
+
+Response: 
+HTTP/1.1 200 OK
+Transfer-Encoding: chunked
+Azure-Asyncoperation: https://management.azure.com/subscriptions/c4528d9e-c99a-48bb-b12d-fde2176a43b8/resourcegroups/test-a0e7238e-2adb-4d93-ba3b-36868807fb30/providers/Microsoft.Resources/deployments/b581999f-a112-40aa-bd22-7be256e021cb/operationStatuses/08586618385638103482?api-version=2017-05-10
+Cache-Control: no-cache
+Content-Type: application/json; charset=utf-8
+Date: Wed, 17 Oct 2018 09:25:25 GMT
+Expires: -1
+Pragma: no-cache
+Strict-Transport-Security: max-age=31536000; includeSubDomains
+Vary: Accept-Encoding
+X-Content-Type-Options: nosniff
+X-Ms-Correlation-Request-Id: 2b4bb574-4147-4dc5-ae5b-3a3308ab93e3
+X-Ms-Ratelimit-Remaining-Subscription-Writes: 1197
+X-Ms-Request-Id: 2b4bb574-4147-4dc5-ae5b-3a3308ab93e3
+X-Ms-Routing-Request-Id: EASTASIA:20181017T092525Z:2b4bb574-4147-4dc5-ae5b-3a3308ab93e3
+
+2e4
+{"id":"/subscriptions/c4528d9e-c99a-48bb-b12d-fde2176a43b8/resourceGroups/test-a0e7238e-2adb-4d93-ba3b-36868807fb30/providers/Microsoft.Resources/deployments/b581999f-a112-40aa-bd22-7be256e021cb","name":"b581999f-a112-40aa-bd22-7be256e021cb","properties":{"templateHash":"17505938806422885798","parameters":{"tags":{"type":"Object","value":{"defaultExperience":"Table","heritage":"open-service-broker-azure"}}},"mode":"Incremental","provisioningState":"Accepted","timestamp":"2018-10-17T09:25:23.704835Z","duration":"PT2.037578S","correlationId":"2b4bb574-4147-4dc5-ae5b-3a3308ab93e3","providers":[{"namespace":"Microsoft.DocumentDb","resourceTypes":[{"resourceType":"databaseAccounts","locations":["southcentralus"]}]}],"dependencies":[]}}
+0
+
+
+Exit future.Done
+Entering WaitForCompletion
+In (f Future) WaitForCompletion
+In WaitForCompletion, invoke f.Done
+In future.Done
+In future.Done, sending request:
+GET /subscriptions/c4528d9e-c99a-48bb-b12d-fde2176a43b8/resourcegroups/test-a0e7238e-2adb-4d93-ba3b-36868807fb30/providers/Microsoft.Resources/deployments/b581999f-a112-40aa-bd22-7be256e021cb/operationStatuses/08586618385638103482?api-version=2017-05-10 HTTP/0.0
+Host: management.azure.com
+Authorization: <redacted>
+User-Agent: Go/go1.10 (amd64-linux) go-autorest/9.8.1 Azure-SDK-For-Go/v14.0.0 resources/2017-05-10; open-service-broker/
+
+
+Response: 
+HTTP/1.1 200 OK
+Cache-Control: no-cache
+Content-Type: application/json; charset=utf-8
+Date: Wed, 17 Oct 2018 09:25:25 GMT
+Expires: -1
+Pragma: no-cache
+Strict-Transport-Security: max-age=31536000; includeSubDomains
+Vary: Accept-Encoding
+X-Content-Type-Options: nosniff
+X-Ms-Correlation-Request-Id: 3c5e3b72-57df-48e8-8143-ea86992806da
+X-Ms-Ratelimit-Remaining-Subscription-Reads: 11964
+X-Ms-Request-Id: 3c5e3b72-57df-48e8-8143-ea86992806da
+X-Ms-Routing-Request-Id: EASTASIA:20181017T092526Z:3c5e3b72-57df-48e8-8143-ea86992806da
+
+{"status":"Accepted"}
+2018/10/17 09:25:45 ----> TestServices/lifecycle/cosmosdb/table-api-account-only: in progress
+In loop, invoke f.Done
+In future.Done
+In future.Done, sending request:
+GET /subscriptions/c4528d9e-c99a-48bb-b12d-fde2176a43b8/resourcegroups/test-a0e7238e-2adb-4d93-ba3b-36868807fb30/providers/Microsoft.Resources/deployments/b581999f-a112-40aa-bd22-7be256e021cb/operationStatuses/08586618385638103482?api-version=2017-05-10 HTTP/0.0
+Host: management.azure.com
+Authorization: <redacted>
+User-Agent: Go/go1.10 (amd64-linux) go-autorest/9.8.1 Azure-SDK-For-Go/v14.0.0 resources/2017-05-10; open-service-broker/
+
+
+Response: 
+HTTP/1.1 200 OK
+Cache-Control: no-cache
+Content-Type: application/json; charset=utf-8
+Date: Wed, 17 Oct 2018 09:26:27 GMT
+Expires: -1
+Pragma: no-cache
+Strict-Transport-Security: max-age=31536000; includeSubDomains
+Vary: Accept-Encoding
+X-Content-Type-Options: nosniff
+X-Ms-Correlation-Request-Id: 22eab090-2598-42c2-85d6-0e01a91baa70
+X-Ms-Ratelimit-Remaining-Subscription-Reads: 11963
+X-Ms-Request-Id: 22eab090-2598-42c2-85d6-0e01a91baa70
+X-Ms-Routing-Request-Id: EASTASIA:20181017T092627Z:22eab090-2598-42c2-85d6-0e01a91baa70
+
+{"status":"Succeeded"}
+The state of regions:
+Location: southcentralus, state: Succeeded
+Location: eastus2, state: Deleting
+2018/10/17 09:26:45 ----> TestServices/lifecycle/cosmosdb/table-api-account-only: in progress
+The state of regions:
+Location: southcentralus, state: Succeeded
+Location: eastus2, state: Deleting
+The state of regions:
+Location: southcentralus, state: Succeeded
+Location: eastus2, state: Deleting
+The state of regions:
+Location: southcentralus, state: Succeeded
+Location: eastus2, state: Deleting
+The state of regions:
+Location: southcentralus, state: Succeeded
+Location: eastus2, state: Deleting
+The state of regions:
+Location: southcentralus, state: Succeeded
+Location: eastus2, state: Deleting
+The state of regions:
+Location: southcentralus, state: Succeeded
+Location: eastus2, state: Deleting
+2018/10/17 09:27:45 ----> TestServices/lifecycle/cosmosdb/table-api-account-only: in progress
+The state of regions:
+Location: southcentralus, state: Succeeded
+Location: eastus2, state: Deleting
+The state of regions:
+Location: southcentralus, state: Succeeded
+Location: eastus2, state: Deleting
+The state of regions:
+Location: southcentralus, state: Succeeded
+Location: eastus2, state: Deleting
+The state of regions:
+Location: southcentralus, state: Succeeded
+Location: eastus2, state: Deleting
+The state of regions:
+Location: southcentralus, state: Succeeded
+Location: eastus2, state: Deleting
+The state of regions:
+Location: southcentralus, state: Succeeded
+Location: eastus2, state: Deleting
+2018/10/17 09:28:45 ----> TestServices/lifecycle/cosmosdb/table-api-account-only: in progress
+The state of regions:
+Location: southcentralus, state: Succeeded
+Location: eastus2, state: Deleting
+The state of regions:
+Location: southcentralus, state: Succeeded
+Location: eastus2, state: Deleting
+The state of regions:
+Location: southcentralus, state: Succeeded
+Location: eastus2, state: Deleting
+The state of regions:
+Location: southcentralus, state: Succeeded
+Location: eastus2, state: Deleting
+The state of regions:
+Location: southcentralus, state: Succeeded
+Location: eastus2, state: Deleting
+The state of regions:
+Location: southcentralus, state: Succeeded
+Location: eastus2, state: Deleting
+2018/10/17 09:29:45 ----> TestServices/lifecycle/cosmosdb/table-api-account-only: in progress
+The state of regions:
+Location: southcentralus, state: Succeeded
+Location: eastus2, state: Deleting
+The state of regions:
+Location: southcentralus, state: Succeeded
+Location: eastus2, state: Deleting
+The state of regions:
+Location: southcentralus, state: Succeeded
+Location: eastus2, state: Deleting
+The state of regions:
+Location: southcentralus, state: Succeeded
+Location: eastus2, state: Deleting
+The state of regions:
+Location: southcentralus, state: Succeeded
+Location: eastus2, state: Deleting
+The state of regions:
+Location: southcentralus, state: Succeeded
+Location: eastus2, state: Deleting
+2018/10/17 09:30:45 ----> TestServices/lifecycle/cosmosdb/table-api-account-only: in progress
+The state of regions:
+Location: southcentralus, state: Succeeded
+Location: eastus2, state: Deleting
+The state of regions:
+Location: southcentralus, state: Succeeded
+Location: eastus2, state: Deleting
+The state of regions:
+Location: southcentralus, state: Succeeded
+Location: eastus2, state: Deleting
+The state of regions:
+Location: southcentralus, state: Succeeded
+Location: eastus2, state: Deleting
+The state of regions:
+Location: southcentralus, state: Succeeded
+Location: eastus2, state: Deleting
+The state of regions:
+Location: southcentralus, state: Succeeded
+Location: eastus2, state: Deleting
+2018/10/17 09:31:45 ----> TestServices/lifecycle/cosmosdb/table-api-account-only: in progress
+The state of regions:
+Location: southcentralus, state: Succeeded
+Location: eastus2, state: Deleting
+The state of regions:
+Location: southcentralus, state: Succeeded
+Location: eastus2, state: Deleting
+The state of regions:
+Location: southcentralus, state: Succeeded
+Location: eastus2, state: Deleting
+The state of regions:
+Location: southcentralus, state: Succeeded
+Location: eastus2, state: Deleting
+The state of regions:
+Location: southcentralus, state: Succeeded
+Location: eastus2, state: Deleting
+The state of regions:
+Location: southcentralus, state: Succeeded
+Location: eastus2, state: Deleting
+2018/10/17 09:32:45 ----> TestServices/lifecycle/cosmosdb/table-api-account-only: in progress
+The state of regions:
+Location: southcentralus, state: Succeeded
+Location: eastus2, state: Deleting
+The state of regions:
+Location: southcentralus, state: Succeeded
+The state of regions:
+Location: southcentralus, state: Succeeded
+The state of regions:
+Location: southcentralus, state: Succeeded
+The state of regions:
+Location: southcentralus, state: Succeeded
+The state of regions:
+Location: southcentralus, state: Succeeded
+2018/10/17 09:33:45 ----> TestServices/lifecycle/cosmosdb/table-api-account-only: in progress
+The state of regions:
+Location: southcentralus, state: Succeeded
+Location: centralus, state: Creating
+The state of regions:
+Location: southcentralus, state: Succeeded
+Location: centralus, state: Creating
+The state of regions:
+Location: southcentralus, state: Succeeded
+Location: centralus, state: Creating
+The state of regions:
+Location: southcentralus, state: Succeeded
+Location: centralus, state: Creating
+The state of regions:
+Location: southcentralus, state: Succeeded
+Location: centralus, state: Creating
+The state of regions:
+Location: southcentralus, state: Succeeded
+Location: centralus, state: Creating
+2018/10/17 09:34:45 ----> TestServices/lifecycle/cosmosdb/table-api-account-only: in progress
+The state of regions:
+Location: southcentralus, state: Succeeded
+Location: centralus, state: Creating
+The state of regions:
+Location: southcentralus, state: Succeeded
+Location: centralus, state: Creating
+The state of regions:
+Location: southcentralus, state: Succeeded
+Location: centralus, state: Creating
+The state of regions:
+Location: southcentralus, state: Succeeded
+Location: centralus, state: Creating
+The state of regions:
+Location: southcentralus, state: Succeeded
+Location: centralus, state: Creating
+The state of regions:
+Location: southcentralus, state: Succeeded
+Location: centralus, state: Creating
+2018/10/17 09:35:45 ----> TestServices/lifecycle/cosmosdb/table-api-account-only: in progress
+The state of regions:
+Location: southcentralus, state: Succeeded
+Location: centralus, state: Creating
+The state of regions:
+Location: southcentralus, state: Succeeded
+Location: centralus, state: Creating
+The state of regions:
+Location: southcentralus, state: Succeeded
+Location: centralus, state: Creating
+The state of regions:
+Location: southcentralus, state: Succeeded
+Location: centralus, state: Creating
+The state of regions:
+Location: southcentralus, state: Succeeded
+Location: centralus, state: Creating
+The state of regions:
+Location: southcentralus, state: Succeeded
+Location: centralus, state: Creating
+2018/10/17 09:36:45 ----> TestServices/lifecycle/cosmosdb/table-api-account-only: in progress
+The state of regions:
+Location: southcentralus, state: Succeeded
+Location: centralus, state: Creating
+The state of regions:
+Location: southcentralus, state: Succeeded
+Location: centralus, state: Creating
+The state of regions:
+Location: southcentralus, state: Succeeded
+Location: centralus, state: Creating
+The state of regions:
+Location: southcentralus, state: Succeeded
+Location: centralus, state: Creating
+The state of regions:
+Location: southcentralus, state: Succeeded
+Location: centralus, state: Creating
+The state of regions:
+Location: southcentralus, state: Succeeded
+Location: centralus, state: Creating
+2018/10/17 09:37:45 ----> TestServices/lifecycle/cosmosdb/table-api-account-only: in progress
+The state of regions:
+Location: southcentralus, state: Succeeded
+Location: centralus, state: Creating
+The state of regions:
+Location: southcentralus, state: Succeeded
+Location: centralus, state: Creating
+The state of regions:
+Location: southcentralus, state: Succeeded
+Location: centralus, state: Creating
+The state of regions:
+Location: southcentralus, state: Succeeded
+Location: centralus, state: Creating
+The state of regions:
+Location: southcentralus, state: Succeeded
+Location: centralus, state: Creating
+The state of regions:
+Location: southcentralus, state: Succeeded
+Location: centralus, state: Creating
+2018/10/17 09:38:45 ----> TestServices/lifecycle/cosmosdb/table-api-account-only: in progress
+The state of regions:
+Location: southcentralus, state: Succeeded
+Location: centralus, state: Creating
+The state of regions:
+Location: southcentralus, state: Succeeded
+Location: centralus, state: Creating
+The state of regions:
+Location: southcentralus, state: Succeeded
+Location: centralus, state: Creating
+The state of regions:
+Location: southcentralus, state: Succeeded
+Location: centralus, state: Creating
+The state of regions:
+Location: southcentralus, state: Succeeded
+Location: centralus, state: Creating
+The state of regions:
+Location: southcentralus, state: Succeeded
+Location: centralus, state: Creating
+2018/10/17 09:39:45 ----> TestServices/lifecycle/cosmosdb/table-api-account-only: in progress
+The state of regions:
+Location: southcentralus, state: Succeeded
+Location: centralus, state: Creating
+The state of regions:
+Location: southcentralus, state: Succeeded
+Location: centralus, state: Creating
+The state of regions:
+Location: southcentralus, state: Succeeded
+Location: centralus, state: Creating
+The state of regions:
+Location: southcentralus, state: Succeeded
+Location: centralus, state: Creating
+The state of regions:
+Location: southcentralus, state: Succeeded
+Location: centralus, state: Creating
+The state of regions:
+Location: southcentralus, state: Succeeded
+Location: centralus, state: Creating
+2018/10/17 09:40:45 ----> TestServices/lifecycle/cosmosdb/table-api-account-only: in progress
+The state of regions:
+Location: southcentralus, state: Succeeded
+Location: centralus, state: Creating
+The state of regions:
+Location: southcentralus, state: Succeeded
+Location: centralus, state: Creating
+The state of regions:
+Location: southcentralus, state: Succeeded
+Location: centralus, state: Creating
+The state of regions:
+Location: southcentralus, state: Succeeded
+Location: centralus, state: Succeeded
+Creating succeeded
+Location:  southcentralus  ,status:  Succeeded
+Location:  centralus  ,status:  Succeeded
+In future.Done
+In future.Done, sending request:
+DELETE /subscriptions/c4528d9e-c99a-48bb-b12d-fde2176a43b8/resourcegroups/test-a0e7238e-2adb-4d93-ba3b-36868807fb30/providers/Microsoft.Resources/deployments/b581999f-a112-40aa-bd22-7be256e021cb?api-version=2017-05-10 HTTP/0.0
+Host: management.azure.com
+Authorization: <redacted>
+User-Agent: Go/go1.10 (amd64-linux) go-autorest/9.8.1 Azure-SDK-For-Go/v14.0.0 resources/2017-05-10; open-service-broker/
+
+
+Response: 
+HTTP/1.1 202 Accepted
+Cache-Control: no-cache
+Date: Wed, 17 Oct 2018 09:41:23 GMT
+Expires: -1
+Location: https://management.azure.com/subscriptions/c4528d9e-c99a-48bb-b12d-fde2176a43b8/operationresults/eyJqb2JJZCI6IkRlcGxveW1lbnREZWxldGlvbkpvYi1HTlMtVEVTVDoyREEwRTcyMzhFOjJEMkFEQjoyRDREOTM6MkRCQTNCOjJEMzY4Njg4MDdGQjMwLUI1ODE5OTlGOjJEQTExMjoyRDQwQUE6MkRCRDIyOjJEN0JFMjU2RTAyMUNCLSIsImpvYkxvY2F0aW9uIjoiZWFzdHVzIn0?api-version=2017-05-10
+Pragma: no-cache
+Retry-After: 15
+Strict-Transport-Security: max-age=31536000; includeSubDomains
+X-Content-Type-Options: nosniff
+X-Ms-Correlation-Request-Id: 4a3a062a-8912-4404-89ae-e9a6506f685d
+X-Ms-Ratelimit-Remaining-Subscription-Deletes: 14999
+X-Ms-Request-Id: 4a3a062a-8912-4404-89ae-e9a6506f685d
+X-Ms-Routing-Request-Id: EASTASIA:20181017T094123Z:4a3a062a-8912-4404-89ae-e9a6506f685d
+Content-Length: 0
+
+
+In (f Future) WaitForCompletion
+In WaitForCompletion, invoke f.Done
+In future.Done
+In future.Done, sending request:
+GET /subscriptions/c4528d9e-c99a-48bb-b12d-fde2176a43b8/operationresults/eyJqb2JJZCI6IkRlcGxveW1lbnREZWxldGlvbkpvYi1HTlMtVEVTVDoyREEwRTcyMzhFOjJEMkFEQjoyRDREOTM6MkRCQTNCOjJEMzY4Njg4MDdGQjMwLUI1ODE5OTlGOjJEQTExMjoyRDQwQUE6MkRCRDIyOjJEN0JFMjU2RTAyMUNCLSIsImpvYkxvY2F0aW9uIjoiZWFzdHVzIn0?api-version=2017-05-10 HTTP/0.0
+Host: management.azure.com
+Authorization: <redacted>
+User-Agent: Go/go1.10 (amd64-linux) go-autorest/9.8.1 Azure-SDK-For-Go/v14.0.0 resources/2017-05-10; open-service-broker/
+
+
+Response: 
+HTTP/1.1 202 Accepted
+Cache-Control: no-cache
+Date: Wed, 17 Oct 2018 09:41:23 GMT
+Expires: -1
+Location: https://management.azure.com/subscriptions/c4528d9e-c99a-48bb-b12d-fde2176a43b8/operationresults/eyJqb2JJZCI6IkRlcGxveW1lbnREZWxldGlvbkpvYi1HTlMtVEVTVDoyREEwRTcyMzhFOjJEMkFEQjoyRDREOTM6MkRCQTNCOjJEMzY4Njg4MDdGQjMwLUI1ODE5OTlGOjJEQTExMjoyRDQwQUE6MkRCRDIyOjJEN0JFMjU2RTAyMUNCLSIsImpvYkxvY2F0aW9uIjoiZWFzdHVzIn0?api-version=2017-05-10
+Pragma: no-cache
+Retry-After: 15
+Strict-Transport-Security: max-age=31536000; includeSubDomains
+X-Content-Type-Options: nosniff
+X-Ms-Correlation-Request-Id: 00c556ce-173d-4be4-9dd3-918947feb503
+X-Ms-Ratelimit-Remaining-Subscription-Reads: 11872
+X-Ms-Request-Id: 00c556ce-173d-4be4-9dd3-918947feb503
+X-Ms-Routing-Request-Id: EASTASIA:20181017T094123Z:00c556ce-173d-4be4-9dd3-918947feb503
+Content-Length: 0
+
+
+In loop, invoke f.Done
+In future.Done
+In future.Done, sending request:
+GET /subscriptions/c4528d9e-c99a-48bb-b12d-fde2176a43b8/operationresults/eyJqb2JJZCI6IkRlcGxveW1lbnREZWxldGlvbkpvYi1HTlMtVEVTVDoyREEwRTcyMzhFOjJEMkFEQjoyRDREOTM6MkRCQTNCOjJEMzY4Njg4MDdGQjMwLUI1ODE5OTlGOjJEQTExMjoyRDQwQUE6MkRCRDIyOjJEN0JFMjU2RTAyMUNCLSIsImpvYkxvY2F0aW9uIjoiZWFzdHVzIn0?api-version=2017-05-10 HTTP/0.0
+Host: management.azure.com
+Authorization: <redacted>
+User-Agent: Go/go1.10 (amd64-linux) go-autorest/9.8.1 Azure-SDK-For-Go/v14.0.0 resources/2017-05-10; open-service-broker/
+
+
+Response: 
+HTTP/1.1 202 Accepted
+Cache-Control: no-cache
+Date: Wed, 17 Oct 2018 09:41:38 GMT
+Expires: -1
+Location: https://management.azure.com/subscriptions/c4528d9e-c99a-48bb-b12d-fde2176a43b8/operationresults/eyJqb2JJZCI6IkRlcGxveW1lbnREZWxldGlvbkpvYi1HTlMtVEVTVDoyREEwRTcyMzhFOjJEMkFEQjoyRDREOTM6MkRCQTNCOjJEMzY4Njg4MDdGQjMwLUI1ODE5OTlGOjJEQTExMjoyRDQwQUE6MkRCRDIyOjJEN0JFMjU2RTAyMUNCLSIsImpvYkxvY2F0aW9uIjoiZWFzdHVzIn0?api-version=2017-05-10
+Pragma: no-cache
+Retry-After: 15
+Strict-Transport-Security: max-age=31536000; includeSubDomains
+X-Content-Type-Options: nosniff
+X-Ms-Correlation-Request-Id: 344faf29-4fc1-4a48-9a81-03b2de8401b5
+X-Ms-Ratelimit-Remaining-Subscription-Reads: 11871
+X-Ms-Request-Id: 344faf29-4fc1-4a48-9a81-03b2de8401b5
+X-Ms-Routing-Request-Id: EASTASIA:20181017T094139Z:344faf29-4fc1-4a48-9a81-03b2de8401b5
+Content-Length: 0
+
+
+2018/10/17 09:41:45 ----> TestServices/lifecycle/cosmosdb/table-api-account-only: in progress
+In loop, invoke f.Done
+In future.Done
+In future.Done, sending request:
+GET /subscriptions/c4528d9e-c99a-48bb-b12d-fde2176a43b8/operationresults/eyJqb2JJZCI6IkRlcGxveW1lbnREZWxldGlvbkpvYi1HTlMtVEVTVDoyREEwRTcyMzhFOjJEMkFEQjoyRDREOTM6MkRCQTNCOjJEMzY4Njg4MDdGQjMwLUI1ODE5OTlGOjJEQTExMjoyRDQwQUE6MkRCRDIyOjJEN0JFMjU2RTAyMUNCLSIsImpvYkxvY2F0aW9uIjoiZWFzdHVzIn0?api-version=2017-05-10 HTTP/0.0
+Host: management.azure.com
+Authorization: <redacted>
+User-Agent: Go/go1.10 (amd64-linux) go-autorest/9.8.1 Azure-SDK-For-Go/v14.0.0 resources/2017-05-10; open-service-broker/
+
+
+Response: 
+HTTP/1.1 204 No Content
+Cache-Control: no-cache
+Date: Wed, 17 Oct 2018 09:41:54 GMT
+Expires: -1
+Pragma: no-cache
+Strict-Transport-Security: max-age=31536000; includeSubDomains
+X-Content-Type-Options: nosniff
+X-Ms-Correlation-Request-Id: 6ad93606-9272-495e-926f-74b74dbed028
+X-Ms-Ratelimit-Remaining-Subscription-Reads: 11870
+X-Ms-Request-Id: 6ad93606-9272-495e-926f-74b74dbed028
+X-Ms-Routing-Request-Id: EASTASIA:20181017T094154Z:6ad93606-9272-495e-926f-74b74dbed028
+
+
+In deprovisioning function...
+Deleting  xz96e9w9ihw6b7c9qvbed999z58ditz6afv
+Print request...
+DELETE /subscriptions/c4528d9e-c99a-48bb-b12d-fde2176a43b8/resourceGroups/test-a0e7238e-2adb-4d93-ba3b-36868807fb30/providers/Microsoft.DocumentDB/databaseAccounts/xz96e9w9ihw6b7c9qvbed999z58ditz6afv?api-version=2015-04-08 HTTP/0.0
+Host: management.azure.com
+
+
+In function deletesender
+Invoking future.Done
+In future.Done
+In future.Done, sending request:
+DELETE /subscriptions/c4528d9e-c99a-48bb-b12d-fde2176a43b8/resourceGroups/test-a0e7238e-2adb-4d93-ba3b-36868807fb30/providers/Microsoft.DocumentDB/databaseAccounts/xz96e9w9ihw6b7c9qvbed999z58ditz6afv?api-version=2015-04-08 HTTP/0.0
+Host: management.azure.com
+Authorization: <redacted>
+User-Agent: Go/go1.10 (amd64-linux) go-autorest/9.8.1 Azure-SDK-For-Go/v14.0.0 documentdb/2015-04-08; open-service-broker/
+
+
+Response: 
+HTTP/1.1 412 PreconditionFailed
+Content-Length: 302
+Cache-Control: no-store, no-cache
+Content-Location: https://management.documents.azure.com:450/subscriptions/c4528d9e-c99a-48bb-b12d-fde2176a43b8/resourceGroups/test-a0e7238e-2adb-4d93-ba3b-36868807fb30/providers/Microsoft.DocumentDB/databaseAccounts/xz96e9w9ihw6b7c9qvbed999z58ditz6afv?api-version=2015-04-08
+Content-Type: application/json
+Date: Wed, 17 Oct 2018 09:41:55 GMT
+Pragma: no-cache
+Server: Microsoft-HTTPAPI/2.0
+Strict-Transport-Security: max-age=31536000; includeSubDomains
+X-Content-Type-Options: nosniff
+X-Ms-Correlation-Request-Id: bb239fc7-847c-4d55-9495-ea3c49f6240e
+X-Ms-Gatewayversion: version=2.0.0.0
+X-Ms-Ratelimit-Remaining-Subscription-Deletes: 14998
+X-Ms-Request-Id: bb239fc7-847c-4d55-9495-ea3c49f6240e
+X-Ms-Routing-Request-Id: EASTASIA:20181017T094155Z:bb239fc7-847c-4d55-9495-ea3c49f6240e
+
+{"code":"PreconditionFailed","message":"There is already an operation in progress which requires exlusive lock on this service xz96e9w9ihw6b7c9qvbed999z58ditz6afv. Please retry the operation after sometime.\r\nActivityId: 58b2f29b-c11d-4e22-9204-bf6bd3f1ea7f, Microsoft.Azure.Documents.Common/2.0.0.0"}
+Json string:  {"code":"PreconditionFailed","message":"There is already an operation in progress which requires exlusive lock on this service xz96e9w9ihw6b7c9qvbed999z58ditz6afv. Please retry the operation after sometime.\r\nActivityId: 58b2f29b-c11d-4e22-9204-bf6bd3f1ea7f, Microsoft.Azure.Documents.Common/2.0.0.0"}
+re.ServiceError
+Status code:  412
+Message:  
+Details:  []
+goroutine 44 [running]:
+runtime/debug.Stack(0xc42066c6c8, 0x2, 0x2)
+	/usr/local/go/src/runtime/debug/stack.go:24 +0xa7
+github.com/Azure/open-service-broker-azure/vendor/github.com/Azure/go-autorest/autorest/azure.(*Future).Done(0xc42066cad8, 0xc42880, 0xc42070a7e0, 0x0, 0x0, 0x0)
+	/go/src/github.com/Azure/open-service-broker-azure/vendor/github.com/Azure/go-autorest/autorest/azure/async.go:131 +0x9ea
+github.com/Azure/open-service-broker-azure/vendor/github.com/Azure/azure-sdk-for-go/services/cosmos-db/mgmt/2015-04-08/documentdb.DatabaseAccountsClient.DeleteSender(0xc417a0, 0xc4203bad70, 0xc41d40, 0xc42036bb00, 0x0, 0x0, 0xdf8475800, 0x1a3185c5000, 0x3, 0x6fc23ac00, ...)
+	/go/src/github.com/Azure/open-service-broker-azure/vendor/github.com/Azure/azure-sdk-for-go/services/cosmos-db/mgmt/2015-04-08/documentdb/databaseaccounts.go:279 +0x2d5
+github.com/Azure/open-service-broker-azure/vendor/github.com/Azure/azure-sdk-for-go/services/cosmos-db/mgmt/2015-04-08/documentdb.DatabaseAccountsClient.Delete(0xc417a0, 0xc4203bad70, 0xc41d40, 0xc42036bb00, 0x0, 0x0, 0xdf8475800, 0x1a3185c5000, 0x3, 0x6fc23ac00, ...)
+	/go/src/github.com/Azure/open-service-broker-azure/vendor/github.com/Azure/azure-sdk-for-go/services/cosmos-db/mgmt/2015-04-08/documentdb/databaseaccounts.go:240 +0x67b
+github.com/Azure/open-service-broker-azure/pkg/services/cosmosdb.deleteCosmosDBAccount(0xc46dc0, 0xc4200a9140, 0xc417a0, 0xc4203bad70, 0xc41d40, 0xc42036bb00, 0x0, 0x0, 0xdf8475800, 0x1a3185c5000, ...)
+	/go/src/github.com/Azure/open-service-broker-azure/pkg/services/cosmosdb/common_deprovision.go:37 +0x1b4
+github.com/Azure/open-service-broker-azure/pkg/services/cosmosdb.(*cosmosAccountManager).deleteCosmosDBAccount(0xc4205306e0, 0xc46dc0, 0xc4200a9080, 0x0, 0x0, 0x0, 0x0, 0xbc5239, 0x24, 0xc4c600, ...)
+	/go/src/github.com/Azure/open-service-broker-azure/pkg/services/cosmosdb/common_deprovision.go:87 +0xe8
+github.com/Azure/open-service-broker-azure/pkg/services/cosmosdb.(*cosmosAccountManager).(github.com/Azure/open-service-broker-azure/pkg/services/cosmosdb.deleteCosmosDBAccount)-fm(0xc46dc0, 0xc4200a9080, 0x0, 0x0, 0x0, 0x0, 0xbc5239, 0x24, 0xc4c600, 0xc420718ea0, ...)
+	/go/src/github.com/Azure/open-service-broker-azure/pkg/services/cosmosdb/common_deprovision.go:64 +0x79
+github.com/Azure/open-service-broker-azure/pkg/service.(*deprovisioningStep).Execute(0xc4203b6b80, 0xc46dc0, 0xc4200a9080, 0x0, 0x0, 0x0, 0x0, 0xbc5239, 0x24, 0xc4c600, ...)
+	/go/src/github.com/Azure/open-service-broker-azure/pkg/service/deprovisioner.go:67 +0xe5
+github.com/Azure/open-service-broker-azure/tests/lifecycle.serviceLifecycleTestCase.execute(0xbaf060, 0x8, 0xbba8f3, 0x16, 0xbc5239, 0x24, 0xbc5b15, 0x24, 0xc420099d40, 0xc420099d70, ...)
+	/go/src/github.com/Azure/open-service-broker-azure/tests/lifecycle/test_case_test.go:315 +0x136e
+github.com/Azure/open-service-broker-azure/tests/lifecycle.TestServices.func1.1(0xc4204f82d0)
+	/go/src/github.com/Azure/open-service-broker-azure/tests/lifecycle/driver_test.go:45 +0xe2
+testing.tRunner(0xc4204f82d0, 0xc420477be0)
+	/usr/local/go/src/testing/testing.go:777 +0xd0
+created by testing.(*T).Run
+	/usr/local/go/src/testing/testing.go:824 +0x2e0
+
+future.Done error
+Catch the error
+2018/10/17 09:41:55 ----> TestServices/lifecycle/cosmosdb/table-api-account-only: completed
+--- FAIL: TestServices (1450.48s)
+    --- FAIL: TestServices/lifecycle (0.00s)
+        --- FAIL: TestServices/lifecycle/TestServices/lifecycle/cosmosdb/table-api-account-only (1450.48s)
+        	assertions.go:239: 
+                          
+	Error Trace:	driver_test.go:46
+        		
+	Error:      	Expected nil, but got: &errors.errorString{s:"error deleting cosmosdb server: documentdb.DatabaseAccountsClient#Delete: Failure sending request: StatusCode=412 -- Original Error: Code=\"\" Message=\"\""}
+FAIL
+2018/10/17 09:41:55 ----> deleting resource group "test-a0e7238e-2adb-4d93-ba3b-36868807fb30"
+In future.Done
+In future.Done, sending request:
+DELETE /subscriptions/c4528d9e-c99a-48bb-b12d-fde2176a43b8/resourcegroups/test-a0e7238e-2adb-4d93-ba3b-36868807fb30?api-version=2017-05-10 HTTP/0.0
+Host: management.azure.com
+Authorization: Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiIsIng1dCI6Imk2bEdrM0ZaenhSY1ViMkMzbkVRN3N5SEpsWSIsImtpZCI6Imk2bEdrM0ZaenhSY1ViMkMzbkVRN3N5SEpsWSJ9.eyJhdWQiOiJodHRwczovL21hbmFnZW1lbnQuYXp1cmUuY29tLyIsImlzcyI6Imh0dHBzOi8vc3RzLndpbmRvd3MubmV0LzcyZjk4OGJmLTg2ZjEtNDFhZi05MWFiLTJkN2NkMDExZGI0Ny8iLCJpYXQiOjE1Mzk3NjkwMTYsIm5iZiI6MTUzOTc2OTAxNiwiZXhwIjoxNTM5NzcyOTE2LCJhaW8iOiI0MlJnWUdCL2U3aVZhNXVnN3RISFIzanIvK3JWQUFBPSIsImFwcGlkIjoiMDE3MTQxYTQtYjViYS00ZWNlLWI2NjgtMjEyNjE4NGE4OGZiIiwiYXBwaWRhY3IiOiIxIiwiaWRwIjoiaHR0cHM6Ly9zdHMud2luZG93cy5uZXQvNzJmOTg4YmYtODZmMS00MWFmLTkxYWItMmQ3Y2QwMTFkYjQ3LyIsIm9pZCI6ImMxYTMyZjc2LWVmNGYtNGFkNy05YTU0LTFjMDkyNzQzZjY3OCIsInN1YiI6ImMxYTMyZjc2LWVmNGYtNGFkNy05YTU0LTFjMDkyNzQzZjY3OCIsInRpZCI6IjcyZjk4OGJmLTg2ZjEtNDFhZi05MWFiLTJkN2NkMDExZGI0NyIsInV0aSI6IlVqanpRdlZhMlV5N0dJSk5rYjhfQVEiLCJ2ZXIiOiIxLjAifQ.WLG61cazSul3gmFeeiP_YB9Rq1FXQZ-7XJNb5MNjiz0SORRkdBX4W6_LtqhBjMkRvtrZAulEUIOVPQTsAtK3gCgu5V1eHswhBcJePq0p5nvwG0x7Su1YZHgcYWaWixlCFPL7ts-z66V5MV3GkUYrhc6n7lvZNcnKAarbm4LyHVoFe5yvql42jRopmSaC72yOvuBOk9hWs7Jw14bdb8Eunobn8E5HLVrpeixXIGgYzmxRCjPdsEi3Oj6xA_I10nVHLxSSLJVtq2fRRLuR5DERWlJV_ENccNNYreW9rC9q4wcF8SfLQ7vtIk3iHLDIOTq7d4Glxj_h-PaS-s7klhkfcA
+User-Agent: Go/go1.10 (amd64-linux) go-autorest/9.8.1 Azure-SDK-For-Go/v14.0.0 resources/2017-05-10
+
+
+Response: 
+HTTP/1.1 202 Accepted
+Cache-Control: no-cache
+Date: Wed, 17 Oct 2018 09:42:00 GMT
+Expires: -1
+Location: https://management.azure.com/subscriptions/c4528d9e-c99a-48bb-b12d-fde2176a43b8/operationresults/eyJqb2JJZCI6IlJFU09VUkNFR1JPVVBERUxFVElPTkpPQi1URVNUOjJEQTBFNzIzOEU6MkQyQURCOjJENEQ5MzoyREJBM0I6MkQzNjg2ODgwN0ZCMzAtRUFTVFVTIiwiam9iTG9jYXRpb24iOiJlYXN0dXMifQ?api-version=2017-05-10
+Pragma: no-cache
+Retry-After: 15
+Strict-Transport-Security: max-age=31536000; includeSubDomains
+X-Content-Type-Options: nosniff
+X-Ms-Correlation-Request-Id: 735b2f76-a4fe-4901-8d16-8ed115216672
+X-Ms-Ratelimit-Remaining-Subscription-Deletes: 14997
+X-Ms-Request-Id: 735b2f76-a4fe-4901-8d16-8ed115216672
+X-Ms-Routing-Request-Id: EASTASIA:20181017T094201Z:735b2f76-a4fe-4901-8d16-8ed115216672
+Content-Length: 0
+
+
+2018/10/17 09:42:01 ----> deleted resource group "test-a0e7238e-2adb-4d93-ba3b-36868807fb30"
+FAIL	github.com/Azure/open-service-broker-azure/tests/lifecycle	1459.704s
+Makefile:185: recipe for target 'test-service-lifecycles' failed
